@@ -28,7 +28,6 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/main';
 
     /**
      * Create a new controller instance.
@@ -41,6 +40,9 @@ class LoginController extends Controller
     }
 
     public function login(Request $requst){
+       if ($this->reCaptcha($requst)==false)
+            return Redirect::to('login')->with('error', "Login Failed! Please check reCaptcha");
+
        $userinfo = $this->validate($requst, [
                         'email' => 'required',
                         'password' => 'required',
@@ -55,6 +57,27 @@ class LoginController extends Controller
     public function logout(Request $request) {
         Auth::logout();
         return redirect('login');
+    }
+
+    public function reCaptcha($data){
+        $res_code = $data['g-recaptcha-response'];
+        $array = [
+                'secret'    => '6LcZo1oUAAAAAO4-cgz5s5xvS72RnjECey_X7rTM',
+                'response'  => $res_code
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($array));
+        curl_setopt($ch, CURLOPT_POST, true);
+
+        $headers = [];
+        $headers[] = "Content-Length: " . strlen(http_build_query($array));
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        return json_decode(curl_exec($ch))->success;
     }
 
 }

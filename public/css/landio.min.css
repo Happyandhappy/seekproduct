@@ -21,4 +21,12 @@
 	.checkbox{
 		margin-top:5px;
 	}
+	.card-header h3{
+		margin-bottom: 0px;
+	}
+	.g-recaptcha{
+		display: inline-block;
+	}
 /*# sourceMappingURL=landio.min.css.map */
+
+

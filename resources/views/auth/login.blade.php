@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header"><h3>{{ __('Login') }}</h3></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -38,15 +38,15 @@
                                         <input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
                                     </label>
                             </div>
-                        </div>
-                            
-                        </div>
 
-                        <div class="form-group">
-                            <div class="col-md-6 offset-md-4">
-                                
+                            <!-- Google reCaptcha -->
+                            <div class="title"> 
+                                <div class="g-recaptcha" data-sitekey="6LcZo1oUAAAAAFY9Z8MfKZ2i45_QeVLtTbyAaC36">
+                                </div>
                             </div>
                         </div>
+                            
+                        
                         <div class="form-submit">
                             <button type="submit" class="btn btn-primary btn-block btn-lg">
                                         {{ __('Login') }}

@@ -32,3 +32,6 @@
       <script src="{{ asset('js/plugins/jquery.vimeo.api.min.js') }}"></script>
       <script src="{{ asset('js/plugins/Chart.min.js') }}"></script>
       <script src="{{ asset('js/landio.js') }}"></script>
+
+      <!-- Google reCaptcha Script -->
+      <script src='https://www.google.com/recaptcha/api.js'></script>

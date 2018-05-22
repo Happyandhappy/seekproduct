@@ -23,12 +23,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        return view('pages.home');
     }
 
     public function home(){
         if (Auth::user())   
-            return view('main')->with('title', 'Main Page');
+            return view('pages.main')->with('title', 'Main Page');
         else 
             return redirect('login');
     }
