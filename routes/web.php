@@ -11,6 +11,10 @@
 |
 */
 
-Route::get('/', 'HomeController@index');
-Route::get('/elements', 'HomeController@elements');
-Route::get('/carousel', 'HomeController@carousel');
+Route::get('/', function(){return view('home');});
+
+Auth::routes();
+Route::get('/logout', 'Auth\LoginController@logout');
+Route::get('/main', 'HomeController@home');
+Route::get('/about', 'HomeController@about');
+Route::get('/contact', 'HomeController@contact');

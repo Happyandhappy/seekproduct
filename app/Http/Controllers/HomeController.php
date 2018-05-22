@@ -3,18 +3,40 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use Auth;
 class HomeController extends Controller
 {
-    public function index(){
-        return view('pages.index');
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+       // $this->middleware('auth');
     }
 
-    public function elements(){
-        return view('pages.elements');
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        return view('home');
     }
 
-    public function carousel(){
-        return view('pages.carousel');
+    public function home(){
+        if (Auth::user())   
+            return view('main')->with('title', 'Main Page');
+        else 
+            return redirect('login');
+    }
+
+    public function about(){
+        return view('pages.about');
+    }
+    public function contact(){
+        return view('pages.contact');
     }
 }
