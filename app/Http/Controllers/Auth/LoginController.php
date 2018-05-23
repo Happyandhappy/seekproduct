@@ -40,13 +40,15 @@ class LoginController extends Controller
     }
 
     public function login(Request $requst){
-       if ($this->reCaptcha($requst)==false)
-            return Redirect::to('login')->with('error', "Login Failed! Please check reCaptcha");
 
        $userinfo = $this->validate($requst, [
                         'email' => 'required',
                         'password' => 'required',
+                        'g-recaptcha-response'=>'required',
                    ]);
+
+       if ($this->reCaptcha($requst)==false)
+            return Redirect::to('login')->with('error', "Login Failed! Please complete the Captcha verification");
 
        if (Auth::Attempt(['email'=>$requst->get('email'), 'password' => $requst->get('password')])){
             return Redirect::to('main')->with('success', 'Successfully Logined'); 

@@ -70,6 +70,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+
         ]);
     }
 
@@ -78,7 +79,12 @@ class RegisterController extends Controller
             "name"      =>  'required|string|max:255',
             'email'     =>  'required|string|email|max:255|unique:users',
             'password'  => 'required|string|min:6|confirmed',
+            'g-recaptcha-response'=>'required',
         ]);
+
+        if ($this->reCaptcha($requst)==false)
+            return Redirect::to('login')->with('error', "Login Failed! Please complete the Captcha verification");
+
         if (User::where('email', '=', $request->get('email'))->exists()) {
             return redirect('register')->with('error', 'Email is already existed.');
         }else{
@@ -90,5 +96,27 @@ class RegisterController extends Controller
         }
         
         return redirect('main');    
+    }
+
+
+    public function reCaptcha($data){
+        $res_code = $data['g-recaptcha-response'];
+        $array = [
+                'secret'    => '6LcZo1oUAAAAAO4-cgz5s5xvS72RnjECey_X7rTM',
+                'response'  => $res_code
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($array));
+        curl_setopt($ch, CURLOPT_POST, true);
+
+        $headers = [];
+        $headers[] = "Content-Length: " . strlen(http_build_query($array));
+
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+        return json_decode(curl_exec($ch))->success;
     }
 }

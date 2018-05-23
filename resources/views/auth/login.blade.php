@@ -41,7 +41,7 @@
 
                             <!-- Google reCaptcha -->
                             <div class="title"> 
-                                <div class="g-recaptcha" data-sitekey="6LcZo1oUAAAAAFY9Z8MfKZ2i45_QeVLtTbyAaC36">
+                                <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
                                 </div>
                             </div>
                         </div>

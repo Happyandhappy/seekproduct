@@ -47,6 +47,13 @@
                         <div class="form-group form-group has-icon-left form-control-password">
                             <label for="password-confirm" class="sr-only">{{ __('Confirm Password') }}</label>
                             <input id="password-confirm" type="password" class="form-control form-control-lg" name="password_confirmation" required placeholder="Confirm password">
+
+                            <br>
+                            <!-- Google reCaptcha -->
+                            <div class="title"> 
+                                <div class="g-recaptcha" data-sitekey="{{env('GOOGLE_RECAPTCHA_KEY')}}">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-submit">
